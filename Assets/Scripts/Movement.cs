@@ -23,6 +23,8 @@ public class Movement : MonoBehaviour
     public LayerMask ground;
     public Transform playerPos;
 
+    private Rigidbody2D[] limbs;
+
     [SerializeField]
     private float stepWait;
 
@@ -31,6 +33,10 @@ public class Movement : MonoBehaviour
     {
         leftLegRB = leftLeg.GetComponent<Rigidbody2D>();
         rightLegRB = rightLeg.GetComponent<Rigidbody2D>();
+
+
+        limbs = GetComponentsInChildren<Rigidbody2D>();
+
     }
 
     // Update is called once per frame
@@ -57,6 +63,13 @@ public class Movement : MonoBehaviour
         grounded = Physics2D.OverlapCircle(playerPos.position, positionRadius, ground);
         if(grounded && Input.GetKeyDown(KeyCode.Space))
         {
+            foreach (Rigidbody2D rigidbody2D in limbs)
+            {
+                Vector2 newVelocity = rigidbody2D.velocity;
+                newVelocity.y = 0;
+                rigidbody2D.velocity = newVelocity;
+            }
+
             rb.AddForce(Vector2.up * jumpForce);
         }
 

@@ -1,0 +1,7 @@
+1. Improve walking mechanics
+2. Add keycode to throw bomb
+3. Detonate the bomb in the air
+
+
+
+Lela ideer: Power ups
