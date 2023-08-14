@@ -29,6 +29,8 @@ public class BombBehavior : MonoBehaviour
 
     public CircleTriggerHandler innerCircles;
     public CircleTriggerHandler outerCircles;
+
+    public bool playerInTheAir = false;
     
 
 
@@ -142,8 +144,13 @@ public class BombBehavior : MonoBehaviour
 
     IEnumerator WaitForLanding(OnTheGround onTheGround, Balance[] balanceScripts)
     {
+
+        playerInTheAir = true;
+
         yield return new WaitUntil(() => onTheGround.IsGrounded); // Wait until the character is on the ground
-        
+
+        playerInTheAir = false;
+
         foreach (Balance balanceScript in balanceScripts)
         {
             balanceScript.enabled = true;
@@ -179,6 +186,12 @@ public class BombBehavior : MonoBehaviour
             yield break;
         }
 
+        foreach (Rigidbody2D rigidbody2D in limbs)
+        {
+            rigidbody2D.velocity = Vector2.zero;
+        }
+
+
 
         var dir = (bodyRB.transform.position - transform.position);
 
@@ -190,6 +203,8 @@ public class BombBehavior : MonoBehaviour
         {
             balanceScript.enabled = false;
         }
+
+        
 
         
 

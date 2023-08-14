@@ -28,9 +28,15 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private float stepWait;
 
+    private bool moving;
+
+    public bool IsMoving { get { return moving; } }
+
+
     // Start is called before the first frame update
     void Start()
     {
+        moving = false;
         leftLegRB = leftLeg.GetComponent<Rigidbody2D>();
         rightLegRB = rightLeg.GetComponent<Rigidbody2D>();
 
@@ -44,6 +50,7 @@ public class Movement : MonoBehaviour
     {
         if(Input.GetAxisRaw("Horizontal") != 0)
         {
+            moving = true;
             if(Input.GetAxisRaw("Horizontal") > 0)
             {
                 anim.Play("WalkRight");
@@ -57,6 +64,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
+            moving = false;
             anim.Play("Idle");
         }
 
