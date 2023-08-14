@@ -4498,6 +4498,7 @@ MonoBehaviour:
   rbRIGHT: {fileID: 1823490103}
   rbLEFT: {fileID: 53823915}
   body: {fileID: 105295862}
+  rightArmRb: {fileID: 340130367}
   WalkRightVector: {x: 20, y: 1}
   WalkLeftVector: {x: -20, y: 1}
   grounded: 0
@@ -4514,6 +4515,7 @@ MonoBehaviour:
   timeBetweenSteps: 0.2
   _noMovement: 0
   bombBehavior: {fileID: 293192593}
+  armRotationSpeed: 5
   limbs:
   - rigidbody2D: {fileID: 105295862}
     targetRotation: 0

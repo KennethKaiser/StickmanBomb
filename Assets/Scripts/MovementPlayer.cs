@@ -11,6 +11,8 @@ public class MovementPlayer : MonoBehaviour
     public Rigidbody2D rbRIGHT;
     public Rigidbody2D rbLEFT;
     public Rigidbody2D body;
+    public Rigidbody2D rightArmRb;
+    public Rigidbody2D rightArmRb2;
 
     public Vector2 WalkRightVector;
     public Vector2 WalkLeftVector;
@@ -45,6 +47,11 @@ public class MovementPlayer : MonoBehaviour
 
     public BombBehavior bombBehavior;
 
+    private float armAngle1;
+    private float armAngle2;
+    [SerializeField]
+    private float armRotationSpeed = 5f;
+
 
     [System.Serializable]
     public class Limbs
@@ -64,6 +71,7 @@ public class MovementPlayer : MonoBehaviour
     
     void Update()
     {
+        CalculateArmMovement();
         InputChecker();
         StabCooldown();
         GroundChecker();
@@ -114,6 +122,8 @@ public class MovementPlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
+        MoveArmToMouse();
+
         if (step1RightReady)
         {
             Step1Right();
@@ -141,6 +151,35 @@ public class MovementPlayer : MonoBehaviour
         Jump();
 
     }
+
+    public void CalculateArmMovement()
+    {
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 armPosition1 = rightArmRb.position;
+        Vector2 direction1 = mousePosition - armPosition1;
+
+        Vector2 armPosition2 = rightArmRb2.position;
+        Vector2 direction2 = mousePosition - armPosition2;
+
+
+        armAngle1 = Mathf.Atan2(direction1.y, direction1.x) * Mathf.Rad2Deg;
+        armAngle2 = Mathf.Atan2(direction2.y, direction2.x) * Mathf.Rad2Deg;
+
+
+        Debug.Log(armAngle1);
+        Debug.Log(armAngle2);
+
+    }
+
+    public void MoveArmToMouse()
+    {
+        float newRotation = Mathf.LerpAngle(rightArmRb.rotation, armAngle1, 1);
+        rightArmRb.MoveRotation(newRotation);
+
+        float newRotation2 = Mathf.LerpAngle(rightArmRb.rotation, armAngle2, 1);
+        rightArmRb2.MoveRotation(newRotation2);
+    }
+
 
     public void AirMovement()
     {

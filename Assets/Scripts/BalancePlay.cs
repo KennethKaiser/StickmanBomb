@@ -23,7 +23,8 @@ public class BalancePlay : MonoBehaviour
     public float forceMagnitude = 5.0f;
 
 
-
+    private float armAngle1;
+    private float armAngle2;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -33,12 +34,15 @@ public class BalancePlay : MonoBehaviour
     void Update()
     {
         HandleRotationInput();
+        CalculateArmMovement();
     }
 
     private void FixedUpdate()
     {
         rb.MoveRotation(targetRotation);
         rb2.MoveRotation(targetRotation);
+        MoveArmToMouse();
+
     }
 
     void HandleRotationInput()
@@ -62,6 +66,31 @@ public class BalancePlay : MonoBehaviour
             
         }
 
+    }
+
+    public void CalculateArmMovement()
+    {
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 armPosition1 = rb.position;
+        Vector2 direction1 = mousePosition - armPosition1;
+
+        Vector2 armPosition2 = rb2.position;
+        Vector2 direction2 = mousePosition - armPosition2;
+
+
+        armAngle1 = Mathf.Atan2(direction1.y, direction1.x) * Mathf.Rad2Deg;
+        armAngle2 = Mathf.Atan2(direction2.y, direction2.x) * Mathf.Rad2Deg;
+
+
+    }
+
+    public void MoveArmToMouse()
+    {
+        float newRotation = Mathf.LerpAngle(rb.rotation, armAngle1, 1);
+        rb.MoveRotation(newRotation);
+
+        float newRotation2 = Mathf.LerpAngle(rb2.rotation, armAngle2, 1);
+        rb2.MoveRotation(newRotation2);
     }
 
     void ApplyStabilizingForce()
