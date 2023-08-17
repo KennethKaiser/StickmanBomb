@@ -22,6 +22,8 @@ public class BalancePlay : MonoBehaviour
 
     public float forceMagnitude = 5.0f;
 
+    public GameObject test;
+
 
     private float armAngle1;
     private float armAngle2;
@@ -70,27 +72,33 @@ public class BalancePlay : MonoBehaviour
 
     public void CalculateArmMovement()
     {
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 t = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePosition = new Vector2(t.x, t.y);
+
         Vector2 armPosition1 = rb.position;
         Vector2 direction1 = mousePosition - armPosition1;
 
         Vector2 armPosition2 = rb2.position;
         Vector2 direction2 = mousePosition - armPosition2;
+        Vector2 direction = mousePosition - (Vector2)test.transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
 
-        armAngle1 = Mathf.Atan2(direction1.y, direction1.x) * Mathf.Rad2Deg;
-        armAngle2 = Mathf.Atan2(direction2.y, direction2.x) * Mathf.Rad2Deg;
+        armAngle1 = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
+        armAngle2 = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
 
+        
+        Debug.Log(armAngle1);
 
     }
 
     public void MoveArmToMouse()
     {
-        float newRotation = Mathf.LerpAngle(rb.rotation, armAngle1, 1);
-        rb.MoveRotation(newRotation);
+        //float newRotation = Mathf.LerpAngle(rb.rotation, armAngle1, 1);
+        rb.MoveRotation(armAngle1);
 
-        float newRotation2 = Mathf.LerpAngle(rb2.rotation, armAngle2, 1);
-        rb2.MoveRotation(newRotation2);
+        //float newRotation2 = Mathf.LerpAngle(rb2.rotation, armAngle2, 1);
+        rb2.MoveRotation(armAngle2);
     }
 
     void ApplyStabilizingForce()
