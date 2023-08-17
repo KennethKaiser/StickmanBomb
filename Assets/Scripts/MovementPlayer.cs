@@ -49,8 +49,7 @@ public class MovementPlayer : MonoBehaviour
 
     private float armAngle1;
     private float armAngle2;
-    [SerializeField]
-    private float armRotationSpeed = 5f;
+    public Transform armPos;
 
 
     [System.Serializable]
@@ -154,30 +153,29 @@ public class MovementPlayer : MonoBehaviour
 
     public void CalculateArmMovement()
     {
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 mousePosition3 = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePosition = new Vector2(mousePosition3.x, mousePosition3.y);
         Vector2 armPosition1 = rightArmRb.position;
-        Vector2 direction1 = mousePosition - armPosition1;
-
-        Vector2 armPosition2 = rightArmRb2.position;
-        Vector2 direction2 = mousePosition - armPosition2;
+        Vector2 direction1 = mousePosition - (Vector2)armPos.position;
+        Vector2 direction2 = mousePosition - (Vector2)armPos.position;
 
 
-        armAngle1 = Mathf.Atan2(direction1.y, direction1.x) * Mathf.Rad2Deg;
-        armAngle2 = Mathf.Atan2(direction2.y, direction2.x) * Mathf.Rad2Deg;
-
-
-        Debug.Log(armAngle1);
-        Debug.Log(armAngle2);
-
+        armAngle1 = Mathf.Atan2(direction1.y, direction1.x) * Mathf.Rad2Deg +90f;
+        armAngle2 = Mathf.Atan2(direction2.y, direction2.x) * Mathf.Rad2Deg + 90f;
     }
+
+    public float smoothing = 5.0f; // Determines how quickly the arm rotates towards the mouse
 
     public void MoveArmToMouse()
     {
-        float newRotation = Mathf.LerpAngle(rightArmRb.rotation, armAngle1, 1);
-        rightArmRb.MoveRotation(newRotation);
 
-        float newRotation2 = Mathf.LerpAngle(rightArmRb.rotation, armAngle2, 1);
-        rightArmRb2.MoveRotation(newRotation2);
+
+        float angleToRotate = Mathf.LerpAngle(rightArmRb.rotation, armAngle1, Time.fixedDeltaTime * smoothing);
+        rightArmRb.MoveRotation(angleToRotate);
+
+        angleToRotate = Mathf.LerpAngle(rightArmRb2.rotation, armAngle2, Time.fixedDeltaTime * smoothing);
+        rightArmRb2.MoveRotation(angleToRotate);
+
     }
 
 
