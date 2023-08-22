@@ -1686,6 +1686,7 @@ GameObject:
   - component: {fileID: 432883340}
   - component: {fileID: 432883339}
   - component: {fileID: 432883344}
+  - component: {fileID: 432883345}
   m_Layer: 0
   m_Name: L_LowerLeg
   m_TagString: Limb
@@ -1863,6 +1864,22 @@ MonoBehaviour:
   checker: {fileID: 1284411758}
   positionRadius: 0.3
   ground:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &432883345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432883337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 042fd27972264934dae453b0e7ffc8f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dustParticlePrefab: {fileID: 6250895109278851472, guid: df37cbacaded8764b9a21e05db5c06aa, type: 3}
+  groundLayer:
     serializedVersion: 2
     m_Bits: 64
 --- !u!1 &442360350
@@ -2308,6 +2325,7 @@ GameObject:
   - component: {fileID: 643574976}
   - component: {fileID: 643574975}
   - component: {fileID: 643574979}
+  - component: {fileID: 643574980}
   m_Layer: 0
   m_Name: R_LowerLeg
   m_TagString: Limb
@@ -2484,6 +2502,22 @@ MonoBehaviour:
   checker: {fileID: 0}
   positionRadius: 0.3
   ground:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &643574980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643574972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 042fd27972264934dae453b0e7ffc8f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dustParticlePrefab: {fileID: 6250895109278851472, guid: df37cbacaded8764b9a21e05db5c06aa, type: 3}
+  groundLayer:
     serializedVersion: 2
     m_Bits: 64
 --- !u!1 &721091280
